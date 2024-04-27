@@ -21,6 +21,6 @@ float SensorIR::getDistance(){
         return medida.RangeMilliMeter;
       }
       else{
-        return (-1);
+        return (0);
       }
 }

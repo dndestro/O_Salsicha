@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+    <title>
+        Email para avisar falta de agua ou racao do salsicha
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <h2 style="color:white; background-color:black; text-align:center;">
+        Notificacao Automatica do Nivel de Agua e Racao do Salsicha
+    </h2>
+    
+    <h3 style="text-align:center;">
+        Nivel Racao: %NIVELRACAO% por cento
+    </h3>
+    
+    <form action="/get">
+        <p>
+            Endereco(s) de email 
+        </p>
+        <input type="email" name="destinatario" value="%DESTINATARIO%" required><br><br>
+      
+        <p>
+            Limite para o nivel de racao
+        <p>
+      
+        <input type="number" step="5" name="limite_racao" value="%LIMITE_RACAO%" required> <br><br>
+      
+        <p>
+            Limite para o nivel de agua
+        <p>
+        
+        <input type="number" step="5" name="limite_agua" value="%LIMITE_AGUA%" required><br><br>
+      
+        <div style="text-align:center;">
+  .         <input type="submit" value="Enviar"/>
+        </div>
+    </form>
+  </body></html>

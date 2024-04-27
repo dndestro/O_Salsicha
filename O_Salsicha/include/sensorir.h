@@ -4,7 +4,6 @@
 
 class SensorIR{
     Adafruit_VL53L0X cLox = Adafruit_VL53L0X ();
-    //VL53L0X_RangingMeasurementData_t cMmedida;
 
     public:
         SensorIR();

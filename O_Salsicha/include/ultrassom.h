@@ -1,7 +1,9 @@
-//#ifndef ARDUINO
+#ifndef ARDUINO_
 #include <Arduino.h>
-//#define ARDUINO
-//#endif
+#define ARDUINO_
+#endif
+
+#define ULTRASSOM_
 
 #define DELAYTRIGGER    100
 #define TIMEOUTPULSEIN  1000
