@@ -4,62 +4,69 @@
 #include "displayRacao.h"
 #include "dSaida.h"
 #include <WiFi.h>
-//#include <AsyncTCP.h>
-//#include <ESPAsyncWebServer.h>
 #include "servidorracao.h"
 #include "SPIFFS.h"
+#include "emailracao.h"
+#include "timer.h"
 
 #define PINOLED     4               // D4 como saída de controle do Led
+
+float nivelAgua = 0;
+float distAgua = 0;
+float nivelRacao = 0;
+float distRacao = 0;
 
 dSaida ledAlerta(PINOLED);
 Agua agua;
 Racao racao;
 DisplayRacao display;
 ServidorRacao servidor;
+EmailRacao eMail;
+Timer *timer5s = new Timer(5000);
 
 //PARAMETROS DE WIFI E SERVIDOR
-
-
 const char* ssid = "NeuesNetzwerk";
 const char* password = "M1nh@N0v@r3d3";
 
-String inputMessage1 = "celulardaempresa1935@gmail.com";  // endereços de email dos destinatários da mensagem
-String inputMessage2 = "3";                               // % do nível do recipiente de racao para envio do e-mail de alerta
-String inputMessage3 = "15";                              // % do nível do recipiente de água para envio do e-mail de alerta
-String lastNivelAgua;                                     // Nivel atual de água para ser exibido na 
-String lastNivelRacao;
 
-const char* PARAM_INPUT_1 = "destinatario";                // conterá os endereços de email dos destinatários da mensagem
-const char* PARAM_INPUT_2 = "limite_racao";                // conterá o limite do nível de ração
-const char* PARAM_INPUT_3 = "limite_agua";                 // conterá o limite do nível de água
+// CALLBACK DE EMAIL
+void eMailCallback(SendStatus msg){
+  Serial.println("Passou pela função de CallBack de e-mail");
+  // Print the current status
+  Serial.println(msg.info());
 
-//AsyncWebServer server(80);
+  // Do something when complete
+  if (msg.success()) {
+    Serial.println("----------------");
+  }
+}
 
-// void notFound(AsyncWebServerRequest *request)
-// {
-//   request->send(404, "text/plain", "Not found");
-// }
+// CALBACK DO TEMPORRIZADOR
+void fTimerTempoCiclo(){
+  nivelAgua = agua.getNivelAgua();
+  distAgua = agua.getDistance();
+  nivelRacao = racao.getNivelRacao();
+  distRacao = racao.getDistance();
+  servidor.atualizaValores(nivelAgua, distAgua, nivelRacao, distRacao);
+  display.atualizaLeituras(nivelRacao, nivelAgua);
+  
+  Serial.print("Racao Cheio = "); Serial.println(servidor.getRacaoCheio());
+  Serial.print("Racao Vazio = "); Serial.println(servidor.getRacaoVazio());
+}
 
+void ajustes(String botao){
+  if(botao == "racmin"){
+    racao.setRacaoVazio(servidor.getRacaoVazio());
+  }
 
-// String processor(const String& var)
-// {
-//   if (var == "NIVELRACAO")  {
-//     return lastNivelRacao;
-//   }
-//   else if (var == "DESTINATARIO"){
-//     return inputMessage1;
-//   }
-//   else if (var == "LIMITE_RACAO"){
-//     return inputMessage2;
-//   }
-//   else if (var == "LIMITE_AGUA"){
-//     return inputMessage3;
-//   }
-//   return String();
-// }
+  if(botao == "racmax"){
+    racao.setRacaoCheio(servidor.getRacaoCheio());
+  }
+}
 
 void setup() {
   Serial.begin(9600);
+  delay(10);
 
 //INICIALIZAÇÃO DO DISPLAY
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)){
@@ -67,7 +74,6 @@ void setup() {
     ledAlerta.setSaida(HIGH); // Se o disply falhar, acende o led para sinalizar a falha
     while(1);
   }
-
 
 //INICIALIZAÇÃO DO SENSOR DA RACAO
   if(!racao.setupSensor()){
@@ -78,7 +84,6 @@ void setup() {
   
 // MENSAGEM DE SPLASH
   display.msgSplash();
-
 
 // // INICIALIZAÇÃO DO WIFI
   WiFi.mode(WIFI_STA);
@@ -96,25 +101,29 @@ void setup() {
     delay(5000);
   }
 
+  //INICIA SERVIDOR WEB
   servidor.iniciaServidor();
+  fTimerTempoCiclo();          //Atualiza os valores para apágina web
 
-   //server.begin();
+  //CONFIGURAÇÃO DO EMAIL
+  eMail.setFuncCallback(eMailCallback);
+  //eMail.enviaEmail("celulardaempresa1935@gmail.com", "teste");
 
-
-
+  //CONFIGURA O(S) TIMER(S)
+  timer5s->setOnTimer(&fTimerTempoCiclo);
+  timer5s->Start();
 }
 
 //__________________________________________________________________________________
 
 void loop() {
+  String bot = "";
+  float valor = 0;
 
-  // Serial.print("Nivel Agua = ");
-  // Serial.println(agua.getNivelAgua());
-  // delay(1500);
-
-  // Serial.print("distancia IR = ");
-  // Serial.println(racao.getNivelRacao());
-
-  // display.atualizaLeituras(racao.getNivelRacao(), agua.getNivelAgua());
-  // delay(1500);
+  if(servidor.novoRequest()){
+    bot = servidor.getBotao();
+    Serial.println(bot);
+    ajustes(bot);
+  }
+  timer5s->Update();
 }

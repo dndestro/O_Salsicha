@@ -13,5 +13,19 @@ float Racao::getNivelRacao(){
 
     distancia = getDistance();
 
-    return ((distancia - DISTRACAOVAZIO) / DISTRACAOCHEIO * 100); //retorna o percentual de água no recipiente com base na calibração
+    return ((racaoVazio - distancia) / (racaoVazio - racaoCheio) * 100); //retorna o percentual de água no recipiente com base na calibração
+}
+
+void Racao::setRacaoVazio(float valor){
+    racaoVazio = valor;
+    Serial.print("Racao Vazio = "); Serial.println(racaoVazio);
+}
+
+void Racao::setRacaoCheio(float valor){
+    if( valor != 0){
+        racaoCheio = valor;
+    }
+    else{
+        racaoCheio = 1000000;
+    }       
 }

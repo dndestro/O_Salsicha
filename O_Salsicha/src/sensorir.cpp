@@ -18,7 +18,7 @@ float SensorIR::getDistance(){
     cLox.rangingTest (&medida, false);
       if (medida.RangeStatus != ERROLEITURA)
       {
-        return medida.RangeMilliMeter;
+        return (medida.RangeMilliMeter / 10);  //retorna valor em cm
       }
       else{
         return (0);

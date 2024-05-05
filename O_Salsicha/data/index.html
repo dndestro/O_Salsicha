@@ -1,43 +1,105 @@
 <!DOCTYPE HTML>
 
-<html>
+<html lang="pt-br">
     <head>
-    <title>
-        Email para avisar falta de agua ou racao do salsicha
-    </title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=\, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css">
 
-<body>
-    <h2 style="color:white; background-color:black; text-align:center;">
-        Notificacao Automatica do Nivel de Agua e Racao do Salsicha
-    </h2>
-    
-    <h3 style="text-align:center;">
-        Nivel Racao: %NIVELRACAO% por cento
-    </h3>
-    
-    <form action="/get">
-        <p>
-            Endereco(s) de email 
-        </p>
-        <input type="email" name="destinatario" value="%DESTINATARIO%" required><br><br>
-      
-        <p>
-            Limite para o nivel de racao
-        <p>
-      
-        <input type="number" step="5" name="limite_racao" value="%LIMITE_RACAO%" required> <br><br>
-      
-        <p>
-            Limite para o nivel de agua
-        <p>
+        <title> Água e Ração do Salsicha </title>
+    </head>
+
+    <body>
+        <header>
+            <h1>
+                Notificação Automática do Nível de Água e Ração do Salsicha
+            </h1>
+        </header>
+       
+
+        <main>
+            
+            <div class="container">
+                
+                <h2>Parâmetros de Ração</h2>
+                
+                <div class="leitura">
+                    <h3>Nível Ração: %NIVELRACAO% %</h3>
+                    <h3>Distância Ração: %DISTRACAO% cm</h3>
+                </div>
+                <div class="config">
+
+                    <div>
+                        <h3> Calibração do Sensor de Ração </h3>
+                    </div>
+
+                    <form action="/get" method="get" id="fRacaoVazio">
+                        <p><strong>Valor de leitura quando Completamente sem ração</strong></p>
+                        <input type="number" step="1" name="racao_vazio" value="%RACAO_VAZIO%" required>
+                        <button class="botao" type="submit" id="botao1" name="botao" value= "racmin">Configurar</button>
+                    </form>
+                    <br>
+                    <br>
+                    <form action="/get" method="get id=fRacaoCheio">
+                        <p><strong>Valor de leitura quando completamente cheio de ração</strong></p>
+                        <input type="number" min="1" step="1" name="racao_cheio" value="%RACAO_CHEIO%" required>
+                        <button class="botao" type="submit" id="botao2" name="botao" value="racmax">Configurar</button>
+                    </form>
+                </div>
+            </div>
+           
         
-        <input type="number" step="5" name="limite_agua" value="%LIMITE_AGUA%" required><br><br>
-      
-        <div style="text-align:center;">
-  .         <input type="submit" value="Enviar"/>
-        </div>
-    </form>
-  </body></html>
+            <div class="container">
+
+                <h2>Parâmetro de Água</h2>
+
+                <div class="leitura">
+                    <h3>Nível Água: %NIVELAGUA% %</h3>
+                    <h3>Distância Água: %DISTAGUA% cm</h3>
+                </div>
+
+                <div class="config">
+
+                    <div>
+                        <h3> Calibração do Sensor de Água </h3>
+                    </div>
+
+                    <form action="/get" method="get" id="fAguaVazio">
+                        <p><strong>Valor de leitura quando completamente sem água</strong></p>
+                        <input type="number" step="1" name="agua_vazio" value="%AGUA_VAZIO%" required>
+                        <button class="botao" type="submit" id="botao3" name="botao" value= "aguamin">Configurar</button>
+                    </form>
+                    <br>
+                    <br>
+                    <form action="/get" method="get" id="fAguaCheio">
+                        <p><strong>Valor de leitura quando completamente cheio de água</strong></p>
+                        <input type="number" min="1" step="1" name="agua_cheio" value="%AGUA_CHEIO%" required>
+                        <button class="botao" type="submit" id="botao4" name="botao" value="aguamax">Configurar</button>
+                    </form>
+                </div>
+            </div>
+            
+            
+            <form action="/get" method="get" id="fAlarme">
+                <div class="container">
+
+                    <h2>Parâmetro de Alarme</h2>
+
+                    <div class="config">
+                        <p><strong>E-mail para Alerta</strong> </p>
+                        <input type="email" name="destinatario" value="%DESTINATARIO%" required> <br> <br>
+                        <p><strong> Limite de alarme para o nivel de ração </strong></p>
+                        <input type="number" step="1" name="limite_racao" value="%LIMITE_RACAO%" required> <br> <br>
+                        <p><strong> Limite de alarme para o nível de água </strong></p>
+                        <input type="number" step="1" name="limite_agua" value="%LIMITE_AGUA%" required> <br> <br>
+                        <button class="botao" type="submit" id="btnAlarme" name="botao" value="Alarme">Enviar</button>
+                    </div>
+                </div>
+            </form>
+        </main>
+
+        <footer>
+            <h3>Desenvolvido por Daniel Destro</h3>
+        </footer>
+    </body>
+</html>
