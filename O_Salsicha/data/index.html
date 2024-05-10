@@ -24,7 +24,7 @@
                 <h2>Parâmetros de Ração</h2>
                 
                 <div class="leitura">
-                    <h3>Nível Ração: %NIVELRACAO% %</h3>
+                    <h3>Nível Ração: %NIVELRACAO% por cento</h3>
                     <h3>Distância Ração: %DISTRACAO% cm</h3>
                 </div>
                 <div class="config">
@@ -34,15 +34,15 @@
                     </div>
 
                     <form action="/get" method="get" id="fRacaoVazio">
-                        <p><strong>Valor de leitura quando Completamente sem ração</strong></p>
-                        <input type="number" step="1" name="racao_vazio" value="%RACAO_VAZIO%" required>
+                        <p><strong>Valor de leitura quando Completamente sem ração (cm)</strong></p>
+                        <input type="number" class="meuinput" min="2" step="1" name="racao_vazio" value="%RACAO_VAZIO%" required>
                         <button class="botao" type="submit" id="botao1" name="botao" value= "racmin">Configurar</button>
                     </form>
                     <br>
                     <br>
                     <form action="/get" method="get id=fRacaoCheio">
-                        <p><strong>Valor de leitura quando completamente cheio de ração</strong></p>
-                        <input type="number" min="1" step="1" name="racao_cheio" value="%RACAO_CHEIO%" required>
+                        <p><strong>Valor de leitura quando completamente cheio de ração (cm)</strong></p>
+                        <input type="number" class="meuinput" min="1" step="1" name="racao_cheio" value="%RACAO_CHEIO%" required>
                         <button class="botao" type="submit" id="botao2" name="botao" value="racmax">Configurar</button>
                     </form>
                 </div>
@@ -54,7 +54,7 @@
                 <h2>Parâmetro de Água</h2>
 
                 <div class="leitura">
-                    <h3>Nível Água: %NIVELAGUA% %</h3>
+                    <h3>Nível Água: %NIVELAGUA% por cento</h3>
                     <h3>Distância Água: %DISTAGUA% cm</h3>
                 </div>
 
@@ -65,15 +65,15 @@
                     </div>
 
                     <form action="/get" method="get" id="fAguaVazio">
-                        <p><strong>Valor de leitura quando completamente sem água</strong></p>
-                        <input type="number" step="1" name="agua_vazio" value="%AGUA_VAZIO%" required>
+                        <p><strong>Valor de leitura quando completamente sem água (cm)</strong></p>
+                        <input type="number" class="meuinput" min="2" step="1" name="agua_vazio" value="%AGUA_VAZIO%" required>
                         <button class="botao" type="submit" id="botao3" name="botao" value= "aguamin">Configurar</button>
                     </form>
                     <br>
                     <br>
                     <form action="/get" method="get" id="fAguaCheio">
-                        <p><strong>Valor de leitura quando completamente cheio de água</strong></p>
-                        <input type="number" min="1" step="1" name="agua_cheio" value="%AGUA_CHEIO%" required>
+                        <p><strong>Valor de leitura quando completamente cheio de água (cm)</strong></p>
+                        <input type="number" class="meuinput" min="1" step="1" name="agua_cheio" value="%AGUA_CHEIO%" required>
                         <button class="botao" type="submit" id="botao4" name="botao" value="aguamax">Configurar</button>
                     </form>
                 </div>
@@ -87,11 +87,11 @@
 
                     <div class="config">
                         <p><strong>E-mail para Alerta</strong> </p>
-                        <input type="email" name="destinatario" value="%DESTINATARIO%" required> <br> <br>
+                        <input type="email" class="meuinput" name="destinatario" value="%DESTINATARIO%" required> <br> <br>
                         <p><strong> Limite de alarme para o nivel de ração </strong></p>
-                        <input type="number" step="1" name="limite_racao" value="%LIMITE_RACAO%" required> <br> <br>
+                        <input type="number" class="meuinput" step="1" name="alarme_racao" value="%ALARME_RACAO%" required> <br> <br>
                         <p><strong> Limite de alarme para o nível de água </strong></p>
-                        <input type="number" step="1" name="limite_agua" value="%LIMITE_AGUA%" required> <br> <br>
+                        <input type="number" class="meuinput" step="1" name="alarme_agua" value="%ALARME_AGUA%" required> <br> <br>
                         <button class="botao" type="submit" id="btnAlarme" name="botao" value="Alarme">Enviar</button>
                     </div>
                 </div>

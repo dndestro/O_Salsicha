@@ -10,11 +10,11 @@ class ServidorRacao{
     bool pgAtualizada = false;
     
     String destinatario = "celulardaempresa1935@gmail.com";  // endereços de email dos destinatários da mensagem
-    String limiteRacao = "3";                               // % do nível do recipiente de racao para envio do e-mail de alerta
-    String limiteAgua = "15";                              // % do nível do recipiente de água para envio do e-mail de alerta
-    String racaoVazio = "0";
+    String alarmeRacao = "3";                               // % do nível do recipiente de racao para envio do e-mail de alerta
+    String alarmeAgua = "15";                              // % do nível do recipiente de água para envio do e-mail de alerta
+    String racaoVazio = "10";
     String racaoCheio = "1";
-    String aguaVazio = "0";
+    String aguaVazio = "10";
     String aguaCheio = "1";
     String botao = "";
 
@@ -24,8 +24,8 @@ class ServidorRacao{
     String distRacao;
 
     const char* DESTINATARIO = "destinatario";                // conterá os endereços de email dos destinatários da mensagem
-    const char* LIMITE_RACAO = "limite_racao";                // conterá o limite do nível de ração
-    const char* LIMITE_AGUA = "limite_agua";                 // conterá o limite do nível de água
+    const char* ALARME_RACAO = "alarme_racao";                // conterá o limite do nível de ração
+    const char* ALARME_AGUA = "alarme_agua";                 // conterá o limite do nível de água
     const char* BOTAO = "botao";
     const char* RAC_VAZIO = "racao_vazio";
     const char* RAC_CHEIO = "racao_cheio";
@@ -40,6 +40,13 @@ class ServidorRacao{
         bool novoRequest();
         float getRacaoVazio();
         float getRacaoCheio();
+        float getAguaVazio();
+        float getAguaCheio();
+        float getAlarmeRacao();
+        float getAlarmeAgua();
+        String getDestinatario();
+        void setParametros(float racVaz, float racCheio, float aguVaz, float aguCheio, 
+                           float almRacao, float almAgua, String dest);
 
     protected:
         String processar(const String& var);
